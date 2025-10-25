@@ -18,7 +18,7 @@ exports.handler = async function (event) {
     // Handling GET requests
     if (event.httpMethod === "GET") {
       // Fetching all items from the collection and converting the result to an array
-        let query = { "number": parseInt(number) };
+        let query = { "number": "1000" };
       const data = await collection.findOne(query);
       // Returning a 200 status code and the fetched data
       return {
