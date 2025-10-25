@@ -4,7 +4,7 @@ const querystring = require('querystring');
 
 // Defining the serverless function
 exports.handler = async function (event) {
-  const { number = 1 } = event.queryStringParameters;
+  const { number = "1000" } = event.queryStringParameters;
   // Creating a new MongoClient instance with the MongoDB URL from the environment variables
   const client = new MongoClient(process.env.MONGODB_URI);
   try {
@@ -18,7 +18,7 @@ exports.handler = async function (event) {
     // Handling GET requests
     if (event.httpMethod === "GET") {
       // Fetching all items from the collection and converting the result to an array
-        let query = { "number": "1000" };
+        let query = { "number": number };
       const data = await collection.findOne(query);
       // Returning a 200 status code and the fetched data
       return {
