@@ -32,7 +32,7 @@ exports.handler = async function (event) {
     if (event.httpMethod === "GET") {
       // Fetching all items from the collection and converting the result to an array
         let query = { "product.model_number": "number" };
-      const data = collection.find(query).sort({"edition": 1, "lot": 1});
+      const data = await collection.find(query).sort({"edition": 1, "lot": 1});
 
       // Returning a 200 status code and the fetched data
       return {
