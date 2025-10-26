@@ -18,23 +18,26 @@ exports.handler = async function (event) {
     if (event.httpMethod === "GET") {
       // Fetching all items from the collection and converting the result to an array
         let query = { };
-          if (event.queryStringParameters.category) {
-    query = { "category": event.queryStringParameters.category }
-  } else if (event.queryStringParameters.property) {
-    query = { "property": event.queryStringParameters.property }
-  } else if (event.queryStringParameters.pin_name) {
-    query = { $text: { $search: event.queryStringParameters.pin_name } }
-  } else if (event.queryStringParameters.company) {
-    query = { "company": { $regex : event.queryStringParameters.company } }
-  } else if (event.queryStringParameters.year) {
-    query = { "year": { $regex : event.queryStringParameters.year } }
-  } else if (event.queryStringParameters.tags) {
-    query = { "tags": { $regex : event.queryStringParameters.tags } }
-  } else if (event.queryStringParameters.type) {
-    query = { "type": { $regex : event.queryStringParameters.type } }
-  } else if (event.queryStringParameters.set) {
-    query = { "set": event.queryStringParameters.set  }
+            if (payload.query.property) {
+    query = { "property": payload.query.property }
+  } else if (payload.query.licensor) {
+    query = { "licensor": payload.query.licensor }
+  } else if (payload.query.name) {
+    query = { $text: { $search: payload.query.name } }
+  } else if (payload.query.number) {
+    query = { "number": payload.query.number }
+  } else if (payload.query.type) {
+    query = { "type": payload.query.type }
+  } else if (payload.query.tags) {
+    query = { "tags": { $regex : payload.query.tags } }
+  } else if (payload.query.availability) {
+    query = { "availability": { $regex : payload.query.availability } }
+  } else if (payload.query.variant) {
+    query = { "variant": { $regex : payload.query.variant } }
+  } else if (payload.query.artist) {
+    query = { "artist_name": { $regex : payload.query.artist } }
   }
+
   
       const data = await collection.find(query, { pin_id: 1, pin_name: 1, category: 1, set: 1, main_img: 1, _id: 0}).sort({"pin_id": -1}).toArray();
       // Returning a 200 status code and the fetched data
