@@ -2,6 +2,19 @@
 const { MongoClient } = require("mongodb");
 const querystring = require('querystring');
 
+function circularReplacer() {
+  const seen = new WeakSet(); // object
+  return (key, value) => {
+    if (typeof value === "object" && value !== null) {
+      if (seen.has(value)) {
+        return;
+      }
+      seen.add(value);
+    }
+    return value;
+  };
+}
+
 // Defining the serverless function
 exports.handler = async function (event) {
   const { number = "1000" } = event.queryStringParameters;
@@ -18,8 +31,10 @@ exports.handler = async function (event) {
     // Handling GET requests
     if (event.httpMethod === "GET") {
       // Fetching all items from the collection and converting the result to an array
-        let query = { "product.model_number": "1000" };
+        let query = { "product.model_number": "number" };
       const data = collection.find(query).sort({"edition": 1, "lot": 1});
+      const jsonString = JSON.stringify(data, circularReplacer());
+
       // Returning a 200 status code and the fetched data
       return {
         statusCode: 200,
@@ -29,7 +44,7 @@ exports.handler = async function (event) {
         /* Required for cookies, authorization headers with HTTPS */
         'Access-Control-Allow-Credentials': true
       },
-        body: JSON.stringify(data)
+        body: jsonString
       };
     }
 
