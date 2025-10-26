@@ -33,7 +33,6 @@ exports.handler = async function (event) {
       // Fetching all items from the collection and converting the result to an array
         let query = { "product.model_number": "number" };
       const data = collection.find(query).sort({"edition": 1, "lot": 1});
-      const jsonString = JSON.stringify(data, circularReplacer());
 
       // Returning a 200 status code and the fetched data
       return {
@@ -44,7 +43,7 @@ exports.handler = async function (event) {
         /* Required for cookies, authorization headers with HTTPS */
         'Access-Control-Allow-Credentials': true
       },
-        body: jsonString
+        body: data
       };
     }
 
