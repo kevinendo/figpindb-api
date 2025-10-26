@@ -37,6 +37,8 @@ exports.handler = async function (event) {
     query = { "variant": { $regex : event.queryStringParameters.variant } }
   } else if (event.queryStringParameters.artist) {
     query = { "artist_name": { $regex : event.queryStringParameters.artist } }
+  } else if (event.queryStringParameters.set) {
+    query = { "set": { $regex : event.queryStringParameters.set } }
   }
 
       const data = await collection.find(query, { number: 1, name: 1, property: 1, set: 1, img_url_med: 1, _id: 0}).sort({"number_prefix": 1, "number_suffix": -1}).toArray();
