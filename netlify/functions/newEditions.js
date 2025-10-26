@@ -43,7 +43,7 @@ exports.handler = async function (event) {
         /* Required for cookies, authorization headers with HTTPS */
         'Access-Control-Allow-Credentials': true
       },
-        body: data
+        body: JSON.stringify(data)
       };
     }
 
