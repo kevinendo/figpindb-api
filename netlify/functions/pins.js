@@ -39,7 +39,8 @@ exports.handler = async function (event) {
     query = { "artist_name": { $regex : event.queryStringParameters.artist } }
   }
 
-      const data = await collection.find(query, { number: 1, name: 1, property: 1, set: 1, img_url_med: 1, _id: 0}).sort({"number": -1}).toArray();
+      const data = await collection.find(query, { number: 1, name: 1, property: 1, set: 1, img_url_med: 1, _id: 0}).sort({"number_prefix": 1, "number_suffix": -1}).toArray();
+
       // Returning a 200 status code and the fetched data
       return {
         statusCode: 200,
