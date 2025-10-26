@@ -19,7 +19,7 @@ exports.handler = async function (event) {
     if (event.httpMethod === "GET") {
       // Fetching all items from the collection and converting the result to an array
        let query = {}
-      const data = await collection.find(query, { number: 1, number_prefix: 1, number_suffix: 1, name: 1, property: 1, img_cutout_url: 1, img_url_med: 1, img_thumbnail_url: 1, _id: 0}).skip((page)*pinsPerPage).limit(pinsPerPage).sort({"number_prefix": 1, "number_suffix": -1}).toArray();
+      const data = await collection.find(query, { number: 1, number_prefix: 1, number_suffix: 1, name: 1, property: 1, img_cutout_url: 1, img_url_med: 1, img_thumbnail_url: 1, _id: 0}).skip((page)*50).limit(50).sort({"number_prefix": 1, "number_suffix": -1}).toArray();
 
       // Returning a 200 status code and the fetched data
       return {
